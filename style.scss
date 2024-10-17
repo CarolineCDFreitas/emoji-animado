@@ -1,0 +1,89 @@
+$cor-de-fundo: #5d3800;
+$cor-do-rosto: #ffcd00;
+$cor-da-boca: #b57700;
+$cor-do-olho: #ffffff;
+$cor-da-iris: #000000;
+
+@mixin flexbox {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: $cor-de-fundo;
+  min-height: 100vh;
+  @include flexbox();
+}
+
+.rosto {
+  width: 300px;
+  height: 300px;
+  background-color: $cor-do-rosto;
+  border-radius: 50%;
+  position: relative;
+  @include flexbox();
+
+  // ::before (pseudo-elemento) que existe somente na estilização, criado para fazer a boca.
+  &::before {
+    content: " ";
+    width: 150px;
+    height: 70px;
+    background-color: $cor-da-boca;
+    border-bottom-left-radius: 70px;
+    border-bottom-right-radius: 70px;
+    position: absolute;
+    top: 180px;
+    transition: 0.5s;
+  }
+
+  &:hover::before {
+    height: 20px;
+    border-radius: 0;
+    top: 210px;
+  }
+
+  .olhos {
+    @include flexbox();
+    position: relative;
+    top: -40px; //em relação a ele mesmo
+
+    .olho {
+      width: 80px;
+      height: 80px;
+      background-color: $cor-do-olho;
+      margin: 0 15px; //para separar os olhos
+      border-radius: 50%;
+      position: relative;
+      overflow: hidden; // para esconder a íris na transição
+      transition: 0.5s;
+
+      // ::before (pseudo-elemento) criado para fazer a íris dos olhos
+      &::before {
+        content: " ";
+        width: 40px;
+        height: 40px;
+        background-color: $cor-da-iris;
+        border-radius: 50%;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%); // para centralizar a íris
+        transition: 0.5s;
+      }
+    }
+  }
+
+  // para fazer a transformação
+  &:hover .olho {
+    height: 10px;
+    background-color: $cor-da-iris;
+    border-radius: 0;
+  }
+}
